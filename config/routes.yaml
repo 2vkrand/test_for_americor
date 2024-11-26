@@ -1,0 +1,21 @@
+# config/routes.yaml
+
+# Маршруты для контроллеров в Shared
+controllers_shared:
+    resource: '../src/Shared/Infrastructure/Controller/'
+    type: attribute
+
+# Маршруты для контроллеров в Clients
+controllers_clients:
+    resource: '../src/Clients/Infrastructure/Controller/'
+    type: attribute
+
+# Маршруты для контроллеров в Products
+controllers_products:
+    resource: '../src/Products/Infrastructure/Controller/'
+    type: attribute
+
+# Маршруты для контроллеров в Products
+controllers_loan_application:
+    resource: '../src/LoanApplication/Infrastructure/Controller/'
+    type: attribute

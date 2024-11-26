@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping"
+                  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                  xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping
+                  http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+    <entity name="App\Clients\Domain\Entity\Address" table="clients_address">
+        <id name="ulid" type="ulid" length="26">
+            <generator strategy="NONE"/>
+        </id>
+        <field name="city" type="string" column="city"/>
+        <field name="state" type="string" column="state"/>
+        <field name="zip" type="string" column="zip"/>
+    </entity>
+</doctrine-mapping>

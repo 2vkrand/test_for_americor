@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping"
+                  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                  xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping
+                  http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+    <entity name="App\Clients\Domain\Entity\Client" table="clients_client">
+        <id name="ulid" type="ulid" length="26">
+            <generator strategy="NONE"/>
+        </id>
+        <field name="firstName" type="client_first_name" column="first_name"/>
+        <field name="lastName" type="client_last_name" column="last_name"/>
+        <field name="age" type="client_age" column="age"/>
+        <embedded name="address" class="App\Clients\Domain\Entity\Address"/>
+        <embedded name="creditInfo" class="App\Clients\Domain\Entity\CreditInfo"/>
+        <field name="email" type="email" column="email"/>
+        <field name="phoneNumber" type="phone_number" column="phone_number"/>
+    </entity>
+</doctrine-mapping>

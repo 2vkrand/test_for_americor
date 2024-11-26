@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping"
+                  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                  xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping
+                  http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+    <entity name="App\Clients\Domain\Entity\CreditInfo" table="clients_credit_info">
+        <id name="ulid" type="ulid" length="26">
+            <generator strategy="NONE"/>
+        </id>
+        <field name="FICOScore" type="client_credit_info_fico_score" column="fico_score"/>
+        <field name="SSN" type="client_credit_info_ssn" column="snn"/>
+        <field name="income" type="client_credit_info_income" column="income"/>
+    </entity>
+</doctrine-mapping>

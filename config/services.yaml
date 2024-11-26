@@ -1,0 +1,122 @@
+# This file is the entry point to configure your own services.
+# Files in the packages/ subdirectory configure your dependencies.
+
+# Put parameters here that don't need to change on each machine where the app is deployed
+# https://symfony.com/doc/current/best_practices.html#use-parameters-for-application-configuration
+parameters:
+
+services:
+    # default configuration for services in *this* file
+    _defaults:
+        autowire: true      # Automatically injects dependencies in your services.
+        autoconfigure: true # Automatically registers your services as commands, event subscribers, etc.
+        bind:
+            $projectDir: '%kernel.project_dir%'
+
+    App\Products\Domain\Repository\ProductRepositoryInterface: '@App\Products\Infrastructure\Repository\ProductRepository'
+
+    App\Clients\Domain\Repository\ClientRepositoryInterface: '@App\Clients\Infrastructure\Repository\ClientRepository'
+
+    App\Clients\Domain\Service\UlidGeneratorInterface: '@App\Shared\Infrastructure\Service\UlidGeneratorService'
+
+    App\LoanApplication\Domain\Service\RandomGeneratorInterface:
+        alias: 'App\LoanApplication\Infrastructure\Service\RandomGenerator'
+        public: true
+
+    App\LoanApplication\Domain\Service\LoanStatusServiceInterface: '@App\LoanApplication\Application\Service\LoanStatusService'
+
+    App\Clients\Infrastructure\Repository\ClientRepository:
+        class: App\Clients\Infrastructure\Repository\ClientRepository
+        factory: ['@doctrine', getRepository]
+        arguments:
+            - App\Clients\Domain\Entity\Client
+
+    App\Shared\Domain\Event\EventDispatcherInterface: '@App\Shared\Infrastructure\Event\SymfonyEventDispatcherAdapter'
+
+    App\LoanApplication\Domain\Service\NotificationAdapterInterface:
+        alias: 'App\LoanApplication\Infrastructure\Adapter\NotificationBrokerAdapter'
+        public: true
+
+    # Регистрация всех классов в слое Application как сервисов
+    App\Shared\Application\:
+        resource: '../src/Shared/Application'
+
+    # Регистрация всех классов в слое Infrastructure как сервисов
+    App\Shared\Infrastructure\:
+        resource: '../src/Shared/Infrastructure'
+        exclude:
+            - '../src/Shared/Infrastructure/Entity/' # Исключаем сущности
+            - '../src/Shared/Infrastructure/Database/Migration/' # Исключение миграций из автозагрузки
+
+    # Доменные модели не должны регистрироваться как сервисы
+    App\Shared\Domain\:
+        resource: '../src/Shared/Domain'
+        exclude: # Исключаем все доменные классы, так как они не являются сервисами
+            - '../src/Shared/Domain/Entity/'
+            - '../src/Shared/Domain/ValueObject/'
+
+    # Регистрация всех классов из Clients в Application, Domain и Infrastructure
+    App\Clients\Application\:
+        resource: '../src/Clients/Application'
+        exclude: [ ]
+
+    App\Clients\Domain\:
+        resource: '../src/Clients/Domain'
+        exclude:
+            - '../src/Clients/Domain/Entity/' # Исключаем доменные сущности, они не должны быть сервисами
+            - '../src/Clients/Domain/ValueObject/' # Исключаем value objects
+
+    App\Clients\Infrastructure\:
+        resource: '../src/Clients/Infrastructure'
+        exclude:
+            - '../src/Clients/Infrastructure/Database/ORM/' # Исключаем ORM файлы
+
+    App\Clients\Infrastructure\Controller\:
+        resource: '../src/Clients/Infrastructure/Controller/'
+        tags: [ 'controller.service_arguments' ]
+
+    #_________________________________________________#
+
+    # Регистрация всех классов из Products в Application, Domain и Infrastructure
+    App\Products\Application\:
+        resource: '../src/Products/Application'
+        exclude: [ ]
+
+    App\Products\Domain\:
+        resource: '../src/Products/Domain'
+        exclude:
+            - '../src/Products/Domain/Entity/' # Исключаем доменные сущности, они не должны быть сервисами
+            - '../src/Products/Domain/ValueObject/' # Исключаем value objects
+
+    App\Products\Infrastructure\:
+        resource: '../src/Products/Infrastructure'
+        exclude:
+            - '../src/Products/Infrastructure/Database/ORM/' # Исключаем ORM файлы
+
+    App\Products\Infrastructure\Controller\:
+        resource: '../src/Products/Infrastructure/Controller/'
+        tags: [ 'controller.service_arguments' ]
+
+    #_________________________________________________#
+
+    # Регистрация всех классов из LoanApplication в Application, Domain и Infrastructure
+    App\LoanApplication\Application\:
+        resource: '../src/LoanApplication/Application'
+        exclude: [ ]
+
+    App\LoanApplication\Domain\:
+        resource: '../src/LoanApplication/Domain'
+        exclude:
+            - '../src/LoanApplication/Domain/Entity/' # Исключаем доменные сущности, они не должны быть сервисами
+            - '../src/LoanApplication/Domain/ValueObject/' # Исключаем value objects
+
+    App\LoanApplication\Infrastructure\:
+        resource: '../src/LoanApplication/Infrastructure'
+        exclude:
+            - '../src/LoanApplication/Infrastructure/Database/ORM/' # Исключаем ORM файлы
+
+    App\LoanApplication\Infrastructure\Controller\:
+        resource: '../src/LoanApplication/Infrastructure/Controller/'
+        tags: [ 'controller.service_arguments' ]
+
+

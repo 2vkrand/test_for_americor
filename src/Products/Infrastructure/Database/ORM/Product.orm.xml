@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping"
+                  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                  xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping
+                  http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+    <entity name="App\Products\Domain\Entity\Product" table="products_product">
+        <id name="ulid" type="ulid" column="ulid" length="26">
+            <generator strategy="NONE"/>
+        </id>
+        <field name="name" type="product_name" column="name"/>
+        <field name="interestRate" type="interest_rate" column="interest_rate"/>
+        <field name="loanTerm" type="loan_term" column="loan_term"/>
+        <field name="loanAmount" type="loan_amount" column="loan_amount"/>
+    </entity>
+</doctrine-mapping>
